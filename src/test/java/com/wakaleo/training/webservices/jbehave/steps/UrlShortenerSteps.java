@@ -14,6 +14,10 @@ import java.util.Map;
 public class UrlShortenerSteps extends ScenarioSteps {
 
     RestTemplate restTemplate;
+    // The google-Api is only useable with an access-key as described here: https://developers.google.com/url-shortener/v1/getting_started#APIKey
+    // You need to activate the api at https://console.developers.google.com/project/{yourProjectNameHere}/apiui/apis/library and then get the api-key 
+    // from https://console.developers.google.com/project/{yourProjectNameHere}/apiui/credential
+    String googleAccessKey = "somethingLikeAIzaSyBm8RAN4jzBiVQ0NOC91vYat7smWVW2azQ";
 
     public UrlShortenerSteps() {
         restTemplate = new RestTemplate();
@@ -28,7 +32,7 @@ public class UrlShortenerSteps extends ScenarioSteps {
 
     @Step("Expand Url for shortUrl={0}")
     public String expand(String providedUrl) {
-        return restTemplate.getForObject("https://www.googleapis.com/urlshortener/v1/url?shortUrl={shortUrl}", String.class, providedUrl);
+        return restTemplate.getForObject("https://www.googleapis.com/urlshortener/v1/url?shortUrl={shortUrl}?key=" + googleAccessKey, String.class, providedUrl);
     }
 
     @Step
